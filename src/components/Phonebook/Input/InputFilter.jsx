@@ -1,7 +1,7 @@
 import React from 'react';
 import Input from './Input.styled';
 import { useDispatch, useSelector } from 'react-redux';
-import {filterContact} from 'redux/contactSlise';
+import {filterContacts} from 'redux/contactSlise';
 
 
 
@@ -10,7 +10,7 @@ const InputFilter = () => {
   const filter = useSelector(state => state.filter);
 
   const handleChange = e => {
-    dispatch(filterContact(e.currentTarget.value));
+    dispatch(filterContacts(e.currentTarget.value));
   };
   return(
      <>
