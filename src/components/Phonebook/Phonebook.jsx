@@ -1,8 +1,7 @@
 
 import { useState } from 'react';
-import { nanoid } from 'nanoid/non-secure';
-import { useDispatch, useSelector } from 'react-redux';
-import { addContact } from 'redux/contactSlise';
+import { useGetContactsQuery, useAddContactMutation } from 'redux/contactsApi';
+import Notiflix from 'notiflix';
 
 import InputName from './Input/InputName';
 import LabelPhoneBook from './Label/Label';
@@ -12,9 +11,10 @@ import FormPhonebook from './Form/Form';
 
 const Phonebook = () => {
   const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
-  const dispatch = useDispatch();
-  const contacts = useSelector(state => state.contacts.items);
+  const [phone, setPhone] = useState('');
+  
+  const {data:contacts}= useGetContactsQuery();
+  const [addContact] = useAddContactMutation();
 
   const handleChange = e => {
     switch (e.currentTarget.name) {
@@ -22,7 +22,7 @@ const Phonebook = () => {
         setName(e.currentTarget.value);
         break;
       case 'number':
-        setNumber(e.currentTarget.value);
+        setPhone(e.currentTarget.value);
         break;
       default:
         return;
@@ -31,23 +31,27 @@ const Phonebook = () => {
 
   const reset = () => {
     setName('');
-    setNumber('');
+    setPhone('');
   };
 
-  const formSubmitHandle = data => {
-    const id = nanoid();
+  const formSubmitHandle = async data => {
+    
     if (contacts.filter(contact => contact.name === data.name).length > 0) {
-      alert(`${data.name} is already in contacts`);
+      Notiflix.Notify.warning(`${data.name} is already in contacts`);
       return;
     }
-    data.id = id;
-
-    dispatch(addContact(data));
+    try{
+      await addContact(data)
+      Notiflix.Notify.success('Contact already added');
+    } catch (error){ 
+      Notiflix.Notify.failure('Something wrong.... try again');
+    }
+    
   };
 
   const clickOnBtnSubmit = e => {
     e.preventDefault();
-    formSubmitHandle({ name, number });
+    formSubmitHandle({ name, phone });
     reset();
   };
 
@@ -57,7 +61,7 @@ const Phonebook = () => {
         <InputName value={name} onChange={handleChange} />
       </LabelPhoneBook>
       <LabelPhoneBook title="Number">
-        <InputNumber value={number} onChange={handleChange} />
+        <InputNumber value={phone} onChange={handleChange} />
       </LabelPhoneBook>
       <ButtonSubmit text="Add contact" />
     </FormPhonebook>
