@@ -36,7 +36,7 @@ const Phonebook = () => {
 
   const formSubmitHandle = async data => {
     
-    if (contacts.filter(contact => contact.name === data.name).length > 0) {
+    if (contacts.filter(contact => contact.name.toLowerCase() === data.name.toLowerCase()).length > 0) {
       Notiflix.Notify.warning(`${data.name} is already in contacts`);
       return;
     }
