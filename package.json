@@ -2,7 +2,7 @@
   "name": "react-homework-template",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://AnnaSobova.github.io/goit-react-hw-07-phonebook/",
+  "homepage": "https://AnnaSobova.io/goit-react-hw-07-phonebook/",
   "dependencies": {
     "@emotion/styled": "^11.10.6",
     "@reduxjs/toolkit": "^1.9.3",
