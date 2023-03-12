@@ -26,8 +26,7 @@ return(
           <span>
             {data.name} {data.phone}
           </span>
-          <ButtonDelete id={data.id}
-          />
+          <ButtonDelete id={data.id}/>
         </li>
       ))}
     </ul>

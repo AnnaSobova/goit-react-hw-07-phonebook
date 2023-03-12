@@ -49,7 +49,7 @@ const Phonebook = () => {
     
   };
 
-  const clickOnBtnSubmit = e => {
+  const clickOnBtnSubmit = async e => {
     e.preventDefault();
     formSubmitHandle({ name, phone });
     reset();
